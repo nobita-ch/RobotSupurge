@@ -1,2 +1,4 @@
 # Kodlar Hakkında:
-hebele
+-) hebele
+*
+# Deneme
