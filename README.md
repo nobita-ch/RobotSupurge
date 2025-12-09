@@ -15,5 +15,9 @@
   - A* (A-Star) Algoritması: Yol planlama (path planning) için kullanılan algortimadır.
  
 ## -) Matris Örneği:
+<img width="803" height="605" alt="resim" src="https://github.com/user-attachments/assets/c61877c4-4edf-4fdb-b9f3-8f8caba858f1" />
+
+Yukardaki alanın matris karşılığı:
+
 <img width="590" height="614" alt="resim" src="https://github.com/user-attachments/assets/94db43ba-322d-436f-9536-915383f2138d" />
 
