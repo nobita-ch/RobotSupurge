@@ -7,3 +7,4 @@
   Siyah: Engel
   Kırmızı: Engel var
   Gri: Boş alan
+  ## 'kod1'de kullanılan algoritmalar: 
