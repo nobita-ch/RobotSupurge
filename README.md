@@ -1,1 +1,2 @@
-# RobotSupurgeKodları
+# Kodlar Hakkında:
+hebele
