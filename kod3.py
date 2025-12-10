@@ -10,8 +10,8 @@ GRID_SIZE = 20
 COLS, ROWS = WIDTH // GRID_SIZE, HEIGHT // GRID_SIZE
 ROBOT_RADIUS = 10
 
-# Hedef Keşif Oranı (%96 taranınca işlem biter)
-EXPLORATION_GOAL = 0.96
+# Hedef Keşif Oranı (%100 taranınca işlem biter)
+EXPLORATION_GOAL = 0.96 + 0.04
 
 # Renkler
 UNKNOWN_COLOR = (240, 230, 140) 
