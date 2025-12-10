@@ -12,6 +12,7 @@
   
  ## -)"kod2" Hakkında:
  - Alan önceden ayarlıdır ve haritalama otomatik olarak yapılır.
+ - Cisim sekerek alanın taramasını gerçekleştirir.
  - Cisim sol üst köşeden başalayacak şekilde ayarlıdır. 
  - Kod içeriğinde alan belirtilmiş olsa da haritalama bu içerikten bağımsız yapılır.
  - Alanın hepsi tarandığında harita matris (.txt) olarak otomatikman kayıtedilir.
@@ -21,7 +22,8 @@
   Gri: Boş alan
 
 ## -)"kod3" Hakkında:
-- 'kod2' ile aynı çalışma mantığına sahiptir. Tek farkı belirlenmiş tuşa basınca keşif işleminin durdurulmasıdır.
+- 'kod2' ile aynı çalışma mantığına sahiptir.
+- Farkılı olarak belirlenmiş tuşa basınca keşif işleminin durması ve manuel olarak da haritanın kaydedilebilmesidir.
 - Keşif işlemi durdurulduğu zaman gidilecek yerin seçilmesi istenilir ve 'kod1'deki gibi tarama ve haritalama işlemlerine devam eder.
 - Renklerin temsil ettiği şeyler:
   Siyah: Engel
