@@ -21,7 +21,7 @@
   Gri: Boş alan
 
 ## -)"kod3" Hakkında:
-- 'kod2' ile aynı çalışma mantığına sahiptir. Tek farkı taranan alanı matris olarak kaydedilmesi ve belirlenmiş tuşa basınca keşif işleminin durdurulmasıdır.
+- 'kod2' ile aynı çalışma mantığına sahiptir. Tek farkı belirlenmiş tuşa basınca keşif işleminin durdurulmasıdır.
 - Keşif işlemi durdurulduğu zaman gidilecek yerin seçilmesi istenilir ve 'kod1'deki gibi tarama ve haritalama işlemlerine devam eder.
 - Renklerin temsil ettiği şeyler:
   Siyah: Engel
