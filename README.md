@@ -21,8 +21,11 @@
   Gri: Boş alan
 
 ## -)"kod3" Hakkında:
-
-
+- 'kod2' ile aynı çalışma mantığına sahiptir. Tek farkı taranan alanı matris olarak kaydedilmesi ve belirlenmiş tuşa basınca keşif işleminin durdurulmasıdır.
+- Keşif işlemi durdurulduğu zaman gidilecek yerin seçilmesi istenilir ve 'kod1'deki gibi tarama ve haritalama işlemlerine devam eder.
+- Renklerin temsil ettiği şeyler:
+  Siyah: Engel
+  Gri: Boş alan
  
 ## -) Matris Örneği:
 <img width="803" height="605" alt="resim" src="https://github.com/user-attachments/assets/c61877c4-4edf-4fdb-b9f3-8f8caba858f1" />
