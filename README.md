@@ -28,6 +28,9 @@
   Gri: Boş alan
  
 ## -) Matris Örneği:
+- 'MatrisOkuma' adlı sayfada, haritalama sonucunda ortaya çıkmış txt belgelerini görsele çevirme işlemi yapılmaktadır
+- Kod çalıştırıldığı zaman txt belgesinin ismini ister
+  
 <img width="803" height="605" alt="resim" src="https://github.com/user-attachments/assets/c61877c4-4edf-4fdb-b9f3-8f8caba858f1" />
 
 Yukardaki alanın matris karşılığı:
