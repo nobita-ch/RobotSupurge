@@ -10,6 +10,9 @@ GRID_SIZE = 20
 COLS, ROWS = WIDTH // GRID_SIZE, HEIGHT // GRID_SIZE
 ROBOT_RADIUS = 10
 
+# Hedef Keşif Oranı (%100 keşfedilince durur)
+EXPLORATION_GOAL = 0.99 + 0.01 
+
 # Renkler
 UNKNOWN_COLOR = (240, 230, 140) 
 FREE_COLOR = (200, 200, 200)    
@@ -29,7 +32,7 @@ class Robot:
         self.x = x
         self.y = y
         self.angle = random.uniform(0, 2 * math.pi)
-        self.speed = 6 # Hız
+        self.speed = 8 # Hızı biraz artırdım, daha çabuk bitirsin
         self.path = []
         self.mode = "EXPLORE"
 
@@ -146,18 +149,16 @@ def a_star_search(grid, start, goal):
                 heapq.heappush(oheap, (f_score[neighbor], neighbor))
     return []
 
-# --- YENİ EKLENEN FONKSİYON: MATRİS KAYDETME ---
+# --- MATRİS KAYDETME ---
 def save_map_matrix(grid, filename="harita_matrisi.txt"):
     """
     Haritayı 2 (Bilinmeyen), 1 (Boş), 0 (Duvar) kodlarıyla kaydeder.
     """
-    rows = len(grid[0]) # Y ekseni (Satırlar)
-    cols = len(grid)    # X ekseni (Sütunlar)
+    rows = len(grid[0])
+    cols = len(grid)
     
     try:
         with open(filename, "w") as f:
-            # Görsel olarak metin dosyasında düzgün durması için satır satır yazıyoruz.
-            # Matriste grid[x][y] olduğu için döngüleri buna göre ayarlıyoruz.
             for y in range(rows):
                 line = []
                 for x in range(cols):
@@ -165,29 +166,26 @@ def save_map_matrix(grid, filename="harita_matrisi.txt"):
                     line.append(str(val))
                 f.write(" ".join(line) + "\n")
         print(f"Harita başarıyla kaydedildi: {filename}")
-        print("Kodlar -> 2: Bilinmeyen, 1: Boş Alan, 0: Engel")
     except Exception as e:
         print(f"Kaydetme hatası: {e}")
 
 def main():
     pygame.init()
     win = pygame.display.set_mode((WIDTH, HEIGHT))
-    pygame.display.set_caption("Robot Haritalama ve Kayıt")
+    pygame.display.set_caption("Robot Haritalama - Otomatik Durdurma")
     clock = pygame.time.Clock()
     
-    # Fontlar
     font_large = pygame.font.SysFont("Arial", 30, bold=True)
     font_small = pygame.font.SysFont("Arial", 18, bold=True)
 
     # Harita
     real_world_map = np.ones((COLS, ROWS), dtype=int) * VAL_FREE 
-    # Duvarlar
     real_world_map[10:15, 10:20] = VAL_WALL
     real_world_map[25:30, 5:15] = VAL_WALL
     real_world_map[5:35, 25:26] = VAL_WALL
     real_world_map[2:5, 2:5] = VAL_WALL 
 
-    # Robotun Hafızası (Bilinmeyen = 2 ile başlar)
+    # Robotun Hafızası
     known_map = np.full((COLS, ROWS), VAL_UNKNOWN, dtype=int)
 
     robot = Robot(50, 50)
@@ -201,21 +199,16 @@ def main():
             if event.type == pygame.QUIT:
                 running = False
             
-            # KLAVYE KONTROLÜ
             if event.type == pygame.KEYDOWN:
-                # Q: Durdur / Başlat
                 if event.key == pygame.K_q:
                     if robot.mode == "EXPLORE":
                         robot.mode = "WAITING"
-                        print("Keşif durduruldu.")
                     elif robot.mode == "WAITING":
                         robot.mode = "EXPLORE" 
                 
-                # S: Haritayı Kaydet (YENİ EKLENEN KISIM)
                 if event.key == pygame.K_s:
                     save_map_matrix(known_map, "harita_matrisi.txt")
 
-            # FARE KONTROLÜ (Hedef Seçimi)
             if robot.mode == "WAITING" and event.type == pygame.MOUSEBUTTONDOWN:
                 m_x, m_y = pygame.mouse.get_pos()
                 target_grid = (m_x // GRID_SIZE, m_y // GRID_SIZE)
@@ -228,17 +221,27 @@ def main():
                         robot.mode = "NAVIGATE"
                     else:
                         print("Yol bulunamadı.")
-                else:
-                    print("Hedef geçersiz.")
 
-        # --- DURUM MAKİNESİ ---
+        # --- DURUM MAKİNESİ VE OTOMATİK DURDURMA ---
         if robot.mode == "EXPLORE":
             robot.auto_explore(real_world_map)
+            
+            # --- YENİ EKLENEN KISIM: Keşif Oranı Hesabı ---
+            total_cells = COLS * ROWS
+            # Bilinmeyen (2) olmayan hücreler, keşfedilmiş demektir (1 veya 0)
+            unknown_count = np.count_nonzero(known_map == VAL_UNKNOWN)
+            explored_ratio = 1.0 - (unknown_count / total_cells)
+            
+            # Eğer keşif oranı hedefe ulaştıysa dur
+            if explored_ratio >= EXPLORATION_GOAL:
+                robot.mode = "WAITING"
+                print(f"Haritanın %{int(explored_ratio*100)}'si tarandı. Keşif tamamlandı.")
+                save_map_matrix(known_map, "otomatik_harita_tamamlandi.txt")
         
         elif robot.mode == "NAVIGATE":
             robot.navigate()
 
-        # --- SENSÖR (Gördüğü yeri 2'den gerçek değerine çevirir) ---
+        # --- SENSÖR ---
         r_grid_x = int(robot.x) // GRID_SIZE
         r_grid_y = int(robot.y) // GRID_SIZE
         view_range = 5 
@@ -266,16 +269,18 @@ def main():
         
         # --- BİLGİ YAZILARI ---
         if robot.mode == "EXPLORE":
-            text_surf = font_small.render("'Q': Durdur | 'S': Haritayı Kaydet (.txt)", True, INFO_COLOR)
+            # İlerleme durumunu göster
+            progress = int((1.0 - (np.count_nonzero(known_map == VAL_UNKNOWN) / (COLS*ROWS))) * 100)
+            text_surf = font_small.render(f"Keşfediliyor... %{progress} (Hedef: %{int(EXPLORATION_GOAL*100)})", True, INFO_COLOR)
             win.blit(text_surf, (10, 10))
             
         elif robot.mode == "WAITING":
-            text_surf = font_large.render("Gitmek için TIKLAYIN", True, TEXT_COLOR)
+            text_surf = font_large.render("KEŞİF TAMAMLANDI - HEDEF SEÇİN", True, TEXT_COLOR)
             text_rect = text_surf.get_rect(center=(WIDTH/2, HEIGHT/2))
             pygame.draw.rect(win, (255, 255, 255), text_rect.inflate(20, 20))
             win.blit(text_surf, text_rect)
             
-            sub_text = font_small.render("'Q': Devam Et | 'S': Kaydet", True, INFO_COLOR)
+            sub_text = font_small.render("'Q': Tekrar Gez | 'S': Kaydet", True, INFO_COLOR)
             win.blit(sub_text, (10, HEIGHT - 30))
 
         pygame.display.update()
