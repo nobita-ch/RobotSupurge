@@ -2,7 +2,7 @@
 ## -)"kod1" Hakkında:
 - Rastgele oluşturulmuş bir haritada manuel olarak (ok tuşları kullanılarak) haritalama yapılır.
 - Cismin bir engele doğru yaklaştığında engelin üzerinde beliren kırmızı renk menzili temsile eder.
-- 's' harfine basınca haritayı matris (.txt) olarak kaydeder(matris örneği sonda bulunuyor). Sadece taranan alanları kaydeder (Kayıt işleminden önce hafıza 2 ile doludur. Eğer ki boş alan görürse 1, engel ile karşılaşırsa 0 ile 2'leri değiştirir).
+- 's' harfine basınca haritayı matris (.txt) olarak kaydeder(matris örneği sonda bulunuyor). Sadece taranan alanları kaydeder (Kayıt işleminden önce hafıza 2 ile doludur. Eğer ki boş alan görürse 1 ile, engel ile karşılaşırsa 0 ile 2'leri değiştirir).
 - Tarama işlemi bitmeden taranan yerlerden bir yer seçerek cismin o yere gitmesi sağlanır. Eğer ki yol boyunca (mavi ile belirtilen çizgi boyunca) taranmamış bir alan görünürse taranır.
 - Renklerin temsil ettiği şeyler:
   Siyah: Engel
@@ -32,6 +32,7 @@
 ## -) Matris Örneği:
 - 'MatrisOkuma' adlı sayfada, haritalama sonucunda ortaya çıkmış txt belgelerini görsele çevirme işlemi yapılmaktadır
 - Kod çalıştırıldığı zaman txt belgesinin ismini ister
+- 2 farklı modu var: 1. mod tam taramanın yapıldığı zamanda, 2. mod ise tam taramanın yapılmadığı zamanda kullanılır.
   
 <img width="803" height="605" alt="resim" src="https://github.com/user-attachments/assets/c61877c4-4edf-4fdb-b9f3-8f8caba858f1" />
 
