@@ -28,8 +28,14 @@
 - Renklerin temsil ettiği şeyler:
   Siyah: Engel
   Gri: Boş alan
- 
-## -) Matris Örneği:
+
+## -)"kod4" Hakkında:
+- Sınır Tabanlı Keşif (Frontier Exploration) ile bilinen yöntem simüle edilir. Bu yöntem, cismin bilinçli hareket etmesini sağlar.
+- Robotun merkezinden 3 kare (birim) yarıçapındaki kareler taranır (Turkuaz çerçeve ile gösterilen alan). Bu alanın içindeki bilgiler Gerçek Harita'dan kopyalanıp Robotun Hafızası'na yapıştırılır.
+- O anda cismin gidecek yolu yoksa 'think' fonksiyonu devreye girer: BFS (Genişlik Öncelikli Arama) algoritması kullanılarak robotun olduğu yerden bir su dalgası gibi tarama yapılır ve ulaşılabilir en yakın sarı nokta (Frontier) hedef olarak seçilir.
+- Hedef belirlendikten sonra robot oraya nasıl gideceğini hesaplar: A (A-Star) Algoritması:* Robotun bulunduğu yerden hedefe, siyah duvarlara çarpmadan giden en kısa yolu hesaplar (Mavi çizgi). Robot bu çizgiyi piksel piksel takip ederek ilerler.
+
+## -) Matris Okuma-Çevirme ve Örneği:
 - 'MatrisOkuma' adlı sayfada, haritalama sonucunda ortaya çıkmış txt belgelerini görsele çevirme işlemi yapılmaktadır
 - Kod çalıştırıldığı zaman txt belgesinin ismini ister
 - 2 farklı modu var: 1. mod tam taramanın yapıldığı zamanda, 2. mod ise tam taramanın yapılmadığı zamanda kullanılır.
